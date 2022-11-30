@@ -1,8 +1,8 @@
 import readlineSync from 'readline-sync';
 import getRandomArbitrary from './random.number.js';
 
-console.log('Answer "yes" if given number is prime. Otherwise answer "no".');
 export default function getPrime(name) {
+    console.log('Answer "yes" if given number is prime. Otherwise answer "no".');
   let i = 0;
   while (i < 3) {
     const numberRandom = getRandomArbitrary(2, 50);
