@@ -1,8 +1,8 @@
 import readlineSync from 'readline-sync';
 import getRandomArbitrary from './random.number.js';
 
-console.log('Answer "yes" if the number is even, otherwise answer "no".');
 export default function getEven(name) {
+ console.log('Answer "yes" if the number is even, otherwise answer "no".');
   let i = 0;
   while (i < 3) {
     const numberRandom = getRandomArbitrary(1, 50);
