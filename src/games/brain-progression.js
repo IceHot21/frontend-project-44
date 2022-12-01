@@ -1,4 +1,3 @@
-
 import run from '../index.js';
 import { getRandomNumber, getRandomIndex } from '../utils.js';
 
