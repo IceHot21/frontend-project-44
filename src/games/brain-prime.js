@@ -1,29 +1,30 @@
-import readlineSync from 'readline-sync';
-import getRandomArbitrary from '../../bin/random.number.js';
+import run from '../index.js';
+import { getRandomNumber } from '../utils.js';
 
-export default function getPrime(name) {
-  console.log('Answer "yes" if given number is prime. Otherwise answer "no".');
-  let i = 0;
-  let flag = true;
-  while (i < 3) {
-    const numberRandom = getRandomArbitrary(2, 1000);
-    console.log('Question: ', numberRandom);
-    const answ = readlineSync.question('Your answer: ');
-    for (let g = 2; g < numberRandom; g += 1) {
-      if (numberRandom % g === 0) {
-        flag = false
-        break;
-      }
-    }
-    if (flag && answ === 'yes' || !flag && answ === 'no') {
-      i += 1;
-      console.log('Correct!');
-    } else {
-      console.log("It is wrong answer ;(. Let's try again, ", name);
-      break;
+const rule = 'Answer "yes" if given number is prime. Otherwise answer "no".';
+const min = 1;
+const max = 100;
+
+const isPrime = (number) => {
+  if (number <= 1) {
+    return false;
+  }
+  const limit = Math.sqrt(number);
+  for (let i = 2; i < limit; i += 1) {
+    if (number % i === 0) {
+      return false;
     }
   }
-  if (i === 3) {
-    console.log('Congratulations, ', name);
-  }
-}
+  return true;
+};
+
+const getRound = () => {
+  const number = getRandomNumber(min, max);
+  const question = String(number);
+  const answer = isPrime(number) ? 'yes' : 'no';
+  return [question, answer];
+};
+
+export default () => {
+  run(rule, getRound);
+};

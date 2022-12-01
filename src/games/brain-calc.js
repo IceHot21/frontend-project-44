@@ -1,44 +1,33 @@
-#!/usr/bin/env node
-import readlineSync from 'readline-sync';
-import getRandomArbitrary from '../../bin/random.number.js';
+import run from '../index.js';
+import { getRandomNumber } from '../utils.js';
 
-export default function getCalc(name) {
-  const equal = ['+', '-', '*'];
-  let i = 0;
-  while (i < 3) {
-    const equalRandom = getRandomArbitrary(0, 2);
-    const numberRandom = getRandomArbitrary(1, 10);
-    const numberRandom1 = getRandomArbitrary(1, 10);
-    console.log('What is the result of the expression?');
-    console.log('Question: ', numberRandom, ` ${equal[equalRandom]} `, numberRandom1);
-    const answ = readlineSync.question('Your answer: ');
-    if (equal[equalRandom] === '+') {
-      if (answ == numberRandom + numberRandom1) {
-        i += 1;
-        console.log('Correct!');
-      } else {
-        console.log(answ, "is wrong answer ;(. Let's try again,", name);
-        break;
-      }
-    } else if (equal[equalRandom] === '-') {
-      if (answ == numberRandom - numberRandom1) {
-        i += 1;
-        console.log('Correct!');
-      } else {
-        console.log(answ, "is wrong answer ;(. Let's try again,", name);
-        break;
-      }
-    } else if (equal[equalRandom] === '*') {
-      if (answ == numberRandom * numberRandom1) {
-        i += 1;
-        console.log('Correct!');
-      } else {
-        console.log(answ, "is wrong answer ;(. Let's try again,", name);
-        break;
-      }
-    }
+const rule = 'What is the result of the expression?';
+const operators = ['+', '-', '*'];
+const min = 1;
+const max = 100;
+
+const calculate = (x, y, operator) => {
+  switch (operator) {
+    case '+':
+      return x + y;
+    case '-':
+      return x - y;
+    case '*':
+      return x * y;
+    default:
+      throw new Error(`Unknown operator: '${operator}'!`);
   }
-  if (i === 3) {
-    console.log('Congratulations! ', name);
-  }
-}
+};
+
+const getRound = () => {
+  const operator = operators[getRandomNumber(0, operators.length - 1)];
+  const number1 = getRandomNumber(min, max);
+  const number2 = getRandomNumber(min, max);
+  const question = `${number1} ${operator} ${number2}`;
+  const answer = String(calculate(number1, number2, operator));
+  return [question, answer];
+};
+
+export default () => {
+  run(rule, getRound);
+};

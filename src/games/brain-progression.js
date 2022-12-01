@@ -1,29 +1,34 @@
 
-import readlineSync from 'readline-sync';
-import getRandomArbitrary from '../../bin/random.number.js';
+import run from '../index.js';
+import { getRandomNumber, getRandomIndex } from '../utils.js';
 
-export default function getProgression(name) {
-  let i = 0;
-  while (i < 3) {
-    const array = [];
-    const progressionLengthRandom = getRandomArbitrary(5, 10);
-    const positionRandom = getRandomArbitrary(5, progressionLengthRandom);
-    const arifmeticRandom = getRandomArbitrary(1, 5);
-    const numberRandom = getRandomArbitrary(1, 50);
-    for (let h = numberRandom; h < numberRandom + arifmeticRandom * progressionLengthRandom; h += arifmeticRandom) {
-      array.push(h);
-    }
-    let array1 = []
-    array1 = Array.from(array)
-    array1.splice(positionRandom - 1, 1, '...')
-    console.log('Question: ', array1);
-    const answ = readlineSync.question('Your answer: ');
-    if (+answ === array[positionRandom - 1]) {
-      i += 1;
-      console.log('Correct!');
-    } else {
-      console.log(answ, "is wrong answer ;(. Let's try again,", name);
-      break;
-    }
+const rule = 'What number is missing in the progression?';
+const minRange = 1;
+const maxRange = 100;
+const minLength = 5;
+const maxLength = 10;
+const minStep = 2;
+const maxStep = 10;
+
+const buildProgression = (start, step, length) => {
+  const progression = [];
+  for (let i = 0; i < length; i += 1) {
+    progression.push(start + i * step);
   }
-}
+  return progression;
+};
+
+const getRound = () => {
+  const start = getRandomNumber(minRange, maxRange);
+  const length = getRandomNumber(minLength, maxLength);
+  const step = getRandomNumber(minStep, maxStep);
+  const progression = buildProgression(start, step, length);
+  const hiddenIndex = getRandomIndex(progression);
+  const answer = String(progression.splice(hiddenIndex, 1, '..'));
+  const question = progression.join(' ');
+  return [question, answer];
+};
+
+export default () => {
+  run(rule, getRound);
+};

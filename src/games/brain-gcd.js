@@ -1,30 +1,20 @@
-import readlineSync from 'readline-sync';
-import getRandomArbitrary from '../../bin/random.number.js';
+import run from '../index.js';
+import { getRandomNumber } from '../utils.js';
 
-export default function getGcd(name) {
-  const divider = Array.from({ length: 100 }, (_, g) => g + 1);
-  let i = 0;
-  while (i < 3) {
-    let max = 0;
-    const numberRandom = getRandomArbitrary(1, 100);
-    const numberRandom1 = getRandomArbitrary(1, 100);
-    console.log('Find the greatest common divisor of given numbers.');
-    console.log('Question: ', numberRandom, numberRandom1);
-    const answ = readlineSync.question('Your answer: ');
-    for (const times of divider) {
-      if (numberRandom % times === 0 && numberRandom1 % times === 0) {
-        max = times;
-      }
-    }
-    if (+answ === max) {
-      i += 1;
-      console.log('Correct!');
-    } else {
-      console.log(answ, "is wrong answer ;(. Let's try again,", name);
-      break;
-    }
-  }
-  if (i === 3) {
-    console.log('Congratulations, ', name);
-}
-}
+const rule = 'Find the greatest common divisor of given numbers . ';
+const min = 1;
+const max = 100;
+
+const findGcd = (x, y) => (y === 0 ? x : findGcd(y, x % y));
+
+const getRound = () => {
+  const number1 = getRandomNumber(min, max);
+  const number2 = getRandomNumber(min, max);
+  const question = `${number1} ${number2}`;
+  const answer = String(findGcd(number1, number2));
+  return [question, answer];
+};
+
+export default () => {
+  run(rule, getRound);
+};
