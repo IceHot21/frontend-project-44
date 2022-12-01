@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/IceHot21/frontend-project-44#readme",
   "bin": {
-    "npm": "bin/brain-games.js",
     "brain-games": "bin/brain-games.js",
     "brain-even": "bin/brain-even.js",
     "brain-calc": "bin/brain-calc.js",
